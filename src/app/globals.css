@@ -1,0 +1,371 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+
+  --background: #f5f5f5;
+  --foreground: #0b0b0b;
+
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-strong: #ffffff;
+  --surface-alt: rgba(11, 11, 11, 0.04);
+  --border: rgba(11, 11, 11, 0.12);
+
+  --text-primary: #0b0b0b;
+  --text-secondary: rgba(11, 11, 11, 0.72);
+  --text-muted: rgba(11, 11, 11, 0.48);
+
+  --accent: #0b0b0b;
+  --accent-hover: #141414;
+  --accent-active: #000000;
+  --accent-disabled: rgba(11, 11, 11, 0.25);
+  --accent-contrast: #ffffff;
+
+  --shadow-sm: 0 12px 34px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 28px 80px rgba(0, 0, 0, 0.16);
+
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --focus-ring: rgba(11, 11, 11, 0.16);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #050505;
+  --foreground: #f7f7f7;
+
+  --surface: rgba(15, 15, 15, 0.88);
+  --surface-strong: #0f0f0f;
+  --surface-alt: rgba(247, 247, 247, 0.06);
+  --border: rgba(247, 247, 247, 0.14);
+
+  --text-primary: #f7f7f7;
+  --text-secondary: rgba(247, 247, 247, 0.78);
+  --text-muted: rgba(247, 247, 247, 0.52);
+
+  --accent: #f7f7f7;
+  --accent-hover: #ffffff;
+  --accent-active: #e8e8e8;
+  --accent-disabled: rgba(247, 247, 247, 0.25);
+  --accent-contrast: #050505;
+
+  --shadow-sm: 0 12px 34px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 28px 80px rgba(0, 0, 0, 0.7);
+
+  --focus-ring: rgba(255, 255, 255, 0.16);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-active: var(--accent-active);
+  --color-accent-disabled: var(--accent-disabled);
+  --color-muted: var(--text-muted);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-surface-alt: var(--surface-alt);
+  --shadow-sm: var(--shadow-sm);
+  --font-sans: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+html,
+body {
+  min-height: 100%;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  position: relative;
+  overflow-x: hidden;
+  color: var(--foreground);
+  background:
+    radial-gradient(1200px 800px at 12% -10%, rgba(11, 11, 11, 0.06), transparent 60%),
+    radial-gradient(1000px 700px at 110% 20%, rgba(11, 11, 11, 0.04), transparent 55%),
+    var(--background);
+}
+
+[data-theme="dark"] body {
+  background:
+    radial-gradient(1100px 760px at 18% -10%, rgba(247, 247, 247, 0.07), transparent 60%),
+    radial-gradient(900px 650px at 110% 30%, rgba(247, 247, 247, 0.05), transparent 55%),
+    var(--background);
+}
+
+/* Shell */
+.mask-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+}
+
+@supports (height: 100dvh) {
+  .mask-shell {
+    min-height: 100dvh;
+  }
+}
+
+/* Card */
+.mask-card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.mask-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(520px 280px at 16% -10%, rgba(11, 11, 11, 0.05), transparent 60%),
+    radial-gradient(420px 320px at 120% 22%, rgba(11, 11, 11, 0.04), transparent 60%),
+    linear-gradient(to bottom, rgba(11, 11, 11, 0.025), transparent 44%);
+}
+
+[data-theme="dark"] .mask-card::before {
+  background:
+    radial-gradient(520px 280px at 16% -10%, rgba(247, 247, 247, 0.06), transparent 60%),
+    radial-gradient(420px 320px at 120% 22%, rgba(247, 247, 247, 0.045), transparent 60%),
+    linear-gradient(to bottom, rgba(247, 247, 247, 0.035), transparent 44%);
+}
+
+.mask-card > * {
+  position: relative;
+}
+
+/* Buttons */
+.mask-button {
+  width: 100%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: none;
+}
+
+.mask-button:hover {
+  background: var(--accent-hover);
+}
+
+.mask-button:active {
+  background: var(--accent-active);
+  transform: scale(0.98);
+}
+
+.mask-button:disabled {
+  background: var(--accent-disabled);
+  cursor: not-allowed;
+}
+
+.mask-button-secondary {
+  width: 100%;
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.mask-button-secondary:hover {
+  background: rgba(11, 11, 11, 0.06);
+}
+
+[data-theme="dark"] .mask-button-secondary:hover {
+  background: rgba(247, 247, 247, 0.1);
+}
+
+.mask-button-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Field row */
+.mask-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+
+.mask-field:last-child {
+  border-bottom: none;
+}
+
+.mask-field-label {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.mask-field-value {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: right;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Copy button */
+.mask-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.mask-copy:hover {
+  background: var(--surface-alt);
+  color: var(--text-primary);
+}
+
+.mask-copy:active {
+  transform: scale(0.92);
+}
+
+/* Avatar */
+.mask-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  overflow: hidden;
+  background: var(--surface-strong);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .mask-avatar {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+}
+
+/* Spinner */
+.mask-spinner {
+  border-color: rgba(11, 11, 11, 0.25);
+  border-top-color: var(--accent);
+}
+
+[data-theme="dark"] .mask-spinner {
+  border-color: rgba(247, 247, 247, 0.25);
+  border-top-color: var(--accent);
+}
+
+/* Theme toggle icons */
+.theme-icon--sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-icon--sun {
+  display: inline-flex;
+}
+
+[data-theme="dark"] .theme-icon--moon {
+  display: none;
+}
+
+/* Toast notification */
+.mask-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+
+.mask-toast.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Icon button */
+.mask-icon-btn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .mask-icon-btn {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+}
+
+.mask-icon-btn:hover {
+  background: var(--surface-alt);
+}
+
+.mask-icon-btn:active {
+  transform: translateY(1px);
+}
+
+/* Section header */
+.mask-section-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  padding: 0 0 8px 0;
+}
