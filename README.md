@@ -1,4 +1,4 @@
-# M A S K
+M A S K
 
 ## What it does
 
