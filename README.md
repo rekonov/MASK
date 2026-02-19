@@ -1,5 +1,3 @@
-M A S K
-
 ## What it does
 
 Generates a complete fake identity in one click:
