@@ -1,7 +1,5 @@
 # M A S K
 
-Zero-knowledge identity generator. Fake names, avatars, temp email — all in the browser.
-
 ## What it does
 
 Generates a complete fake identity in one click:
