@@ -1,10 +1,4 @@
-# MASK
-
 ![Project Banner](./assets/social-preview.svg)
-
-[![Next.js](https://img.shields.io/badge/Next.js-111111?style=for-the-badge&labelColor=000000)](#)
-[![TypeScript](https://img.shields.io/badge/TypeScript-111111?style=for-the-badge&labelColor=000000)](#)
-[![Privacy Tool](https://img.shields.io/badge/Privacy%20Tool-111111?style=for-the-badge&labelColor=000000)](#)
 
 ## Overview
 
