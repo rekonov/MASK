@@ -1,58 +1,52 @@
-## What it does
+# MASK
 
-Generates a complete fake identity in one click:
-- **Name & surname** — 64 first names × 57 last names
-- **Username** — random handle
-- **Phone** — formatted number with country code
-- **Address** — street + city (15 cities)
-- **Date of birth** — random realistic DOB
-- **Email** — privacy-oriented domain
-- **Avatar** — unique symmetric geometric pattern from Canvas (no network)
-- **Live temp email** — real inbox via [mail.tm](https://mail.tm) API, auto-refreshes every 5s
+![Project Banner](./assets/social-preview.svg)
 
-## Stack
+[![Next.js](https://img.shields.io/badge/Next.js-111111?style=for-the-badge&labelColor=000000)](#)
+[![TypeScript](https://img.shields.io/badge/TypeScript-111111?style=for-the-badge&labelColor=000000)](#)
+[![Privacy Tool](https://img.shields.io/badge/Privacy%20Tool-111111?style=for-the-badge&labelColor=000000)](#)
 
-| Tech | Version |
-|------|---------|
-| Next.js | 16.1.6 (App Router, Turbopack) |
-| React | 19.2.3 |
-| Tailwind CSS | 4 |
-| TypeScript | 5 |
-| mail.tm API | free, no key, 8 QPS |
+## Overview
 
-## Run locally
+MASK is a privacy-oriented identity generator.
+It creates realistic test identities locally and supports temporary mailbox activation through `mail.tm`.
+
+Main capabilities:
+- Random profile generation (name, username, phone, address, birth date, email)
+- Deterministic geometric avatar generation (client-side canvas)
+- Live temporary inbox with periodic refresh
+- Local-first behavior (no project database, no account system)
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript 5
+- Tailwind CSS 4
+- `mail.tm` API via Next.js proxy route
+
+## Quick Start
 
 ```bash
-npm i && npm run dev
+npm install
+npm run dev
 ```
 
-Opens on `http://localhost:3000`
+Open: `http://localhost:3000`
 
-## How it works
+## Key Files
 
-All identity data is generated client-side — no API calls, no databases, no accounts.
+- `src/lib/generator.ts` - identity data generation
+- `src/lib/avatar.ts` - deterministic avatar rendering
+- `src/lib/tempmail.ts` - mailbox API integration
+- `src/app/api/mail/route.ts` - server-side proxy for mail endpoints
+- `src/components/IdentityCard.tsx` - main interaction UI
+- `src/components/Inbox.tsx` - incoming messages view
 
-The only network request is temp email creation through [mail.tm](https://mail.tm), proxied via a Next.js API route (`/api/mail`) to avoid CORS.
+## Status
 
-### Files
-
-| File | Purpose |
-|------|---------|
-| `src/lib/generator.ts` | Name, surname, username, phone, address, DOB, email generation |
-| `src/lib/avatar.ts` | Deterministic geometric avatar from seed via Canvas |
-| `src/lib/tempmail.ts` | mail.tm client — create inbox, get token, fetch messages |
-| `src/app/api/mail/route.ts` | Server proxy to mail.tm (CORS), whitelisted endpoints |
-| `src/components/IdentityCard.tsx` | Main UI — all fields, "Activate Live Email", inbox, generate, copy |
-| `src/components/Inbox.tsx` | Incoming emails renderer, 5s auto-refresh, HTML/text body view |
-| `src/components/CopyButton.tsx` | Copy to clipboard + checkmark animation |
-| `src/components/ThemeToggle.tsx` | Light/dark toggle, persists in localStorage |
-
-## Principles
-
-- **Zero-knowledge** — all data generated in browser
-- **No API keys** — mail.tm is free and keyless
-- **No database** — nothing stored server-side
-- **No accounts** — no registration, no login
+- Stage: MVP
+- Focus: UX polish and reliability improvements
 
 ## License
 

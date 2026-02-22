@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="MASK project cover">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#080808"/>
+      <stop offset="100%" stop-color="#191919"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#g)"/>
+  <rect x="80" y="80" width="1120" height="480" fill="none" stroke="#444" stroke-width="2"/>
+  <text x="120" y="300" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="92" font-weight="700">MASK</text>
+  <text x="120" y="365" fill="#d4d4d4" font-family="Segoe UI, Arial, sans-serif" font-size="34">Privacy-Oriented Identity Generator</text>
+  <text x="120" y="415" fill="#b3b3b3" font-family="Segoe UI, Arial, sans-serif" font-size="30">Next.js • TypeScript • Temporary Mailbox Integration</text>
+  <text x="120" y="500" fill="#8c8c8c" font-family="Segoe UI, Arial, sans-serif" font-size="24">github.com/rekonov/MASK</text>
+</svg>
