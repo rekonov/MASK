@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useReducer } from "react";
 
 export default function ThemeToggle() {
-  const [, setTick] = useState(0);
+  const [, forceRender] = useReducer((x: number) => x + 1, 0);
 
   const toggle = useCallback(() => {
     const el = document.documentElement;
@@ -12,11 +12,8 @@ export default function ThemeToggle() {
     el.dataset.theme = next;
     el.style.colorScheme = next;
     localStorage.setItem("mask-theme", next);
-    setTick((t) => t + 1);
-  }, []);
-
-  // Force re-render once mounted so icons match SSR-rendered CSS rules
-  useEffect(() => setTick(1), []);
+    forceRender();
+  }, [forceRender]);
 
   return (
     <button

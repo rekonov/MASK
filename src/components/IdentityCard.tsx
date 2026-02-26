@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useEffect, useRef } from "react";
+import { useCallback, useState } from "react";
 import { type Identity, generateIdentity } from "@/lib/generator";
 import { generateAvatar } from "@/lib/avatar";
 import { type TempMailAccount, createRandomAccount } from "@/lib/tempmail";
@@ -47,18 +47,20 @@ type EmailStatus = "idle" | "creating" | "active" | "error";
 export default function IdentityCard() {
   const [identity, setIdentity] = useState<Identity | null>(null);
   const [avatarSrc, setAvatarSrc] = useState<string>("");
+  const [mounted, setMounted] = useState(false);
+
+  // Generate identity after mount to avoid SSR document access (Canvas API)
+  if (!mounted && typeof window !== "undefined") {
+    const id = generateIdentity();
+    setIdentity(id);
+    setAvatarSrc(generateAvatar(`${id.firstName}${id.lastName}${id.email}`, 200));
+    setMounted(true);
+  }
   const [mailAccount, setMailAccount] = useState<TempMailAccount | null>(null);
   const [emailStatus, setEmailStatus] = useState<EmailStatus>("idle");
   const [emailError, setEmailError] = useState<string | null>(null);
   const [showInbox, setShowInbox] = useState(false);
   const toast = useToast();
-
-  // Generate identity on mount
-  useEffect(() => {
-    const id = generateIdentity();
-    setIdentity(id);
-    setAvatarSrc(generateAvatar(`${id.firstName}${id.lastName}${id.email}`, 200));
-  }, []);
 
   // Create a real temp email account
   const activateEmail = useCallback(async () => {
@@ -129,6 +131,7 @@ export default function IdentityCard() {
           <div className="flex items-center gap-4">
             {avatarSrc && (
               <div className="mask-avatar">
+                {/* eslint-disable-next-line @next/next/no-img-element -- Canvas data URL, not optimizable */}
                 <img
                   src={avatarSrc}
                   alt="Generated avatar"
