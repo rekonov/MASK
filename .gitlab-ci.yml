@@ -1,0 +1,45 @@
+stages:
+  - meta
+  - validate
+
+default:
+  image: node:22-slim
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .next/cache/
+
+pipeline_smoke:
+  stage: meta
+  script:
+    - echo "MASK pipeline started"
+
+lint:
+  stage: validate
+  before_script:
+    - npm ci --prefer-offline
+  script:
+    - npm run lint
+  rules:
+    - changes:
+        - src/**/*
+        - package.json
+        - package-lock.json
+        - eslint.config.mjs
+        - .gitlab-ci.yml
+
+build:
+  stage: validate
+  before_script:
+    - npm ci --prefer-offline
+  script:
+    - npm run build
+  rules:
+    - changes:
+        - src/**/*
+        - package.json
+        - package-lock.json
+        - tsconfig.json
+        - next.config.ts
+        - .gitlab-ci.yml
