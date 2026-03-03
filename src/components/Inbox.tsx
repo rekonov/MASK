@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import DOMPurify from "dompurify";
 import {
   type TempMailAccount,
   type MailMessage,
@@ -92,7 +93,10 @@ export default function Inbox({ account }: InboxProps) {
               <div
                 className="text-[14px] text-[var(--text-secondary)] leading-relaxed prose-sm max-w-none"
                 dangerouslySetInnerHTML={{
-                  __html: selected.html.join(""),
+                  __html: DOMPurify.sanitize(selected.html.join(""), {
+                    FORBID_TAGS: ["style", "form", "input", "textarea", "button"],
+                    FORBID_ATTR: ["onerror", "onload", "onclick", "onmouseover"],
+                  }),
                 }}
                 style={{
                   wordBreak: "break-word",

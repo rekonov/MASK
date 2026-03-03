@@ -3,7 +3,39 @@ import { NextRequest, NextResponse } from "next/server";
 
 const MAILTM = "https://api.mail.tm";
 
+// ── Rate limiter (in-memory, per-IP) ────────────────────────────────
+const RATE_LIMIT = 30;          // max requests
+const RATE_WINDOW_MS = 60_000;  // per 60 seconds
+
+const hits = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = hits.get(ip)?.filter((t) => now - t < RATE_WINDOW_MS) ?? [];
+  timestamps.push(now);
+  hits.set(ip, timestamps);
+  return timestamps.length > RATE_LIMIT;
+}
+
+// Cleanup stale entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, timestamps] of hits) {
+    const fresh = timestamps.filter((t) => now - t < RATE_WINDOW_MS);
+    if (fresh.length === 0) hits.delete(ip);
+    else hits.set(ip, fresh);
+  }
+}, 300_000);
+
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests. Try again later." },
+      { status: 429 },
+    );
+  }
+
   try {
     const body = await req.json();
     const { endpoint, method = "GET", payload, token } = body as {

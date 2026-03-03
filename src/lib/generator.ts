@@ -122,6 +122,8 @@ function generateDOB(): { dateOfBirth: string; age: number } {
   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
     age--;
   }
+  // Clamp: birthday not yet reached this year → age floors at 18
+  if (age < 18) age = 18;
 
   const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
   return { dateOfBirth: dateStr, age };
