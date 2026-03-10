@@ -43,12 +43,6 @@ The only network request is temp email creation through [mail.tm](https://mail.t
 
 ---
 
-## Screenshots
-
-<!-- TODO: Add screenshots -->
-
----
-
 ## Run locally
 
 ```bash
